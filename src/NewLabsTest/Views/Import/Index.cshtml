@@ -1,0 +1,61 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <h2>Import data from CSV</h2>
+        <div style="position: relative; width: 296px; background: #f0f0f0">
+            <div id="progress" style="background: blue; height: 20px; width: 0"></div>
+        </div>
+
+        <input type="file" id="file"/>
+        <button>upload</button>
+        <div id="loading">
+            <p><img src="/images/load.gif" /> Please Wait...</p>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#loading').hide();
+        });
+        $("button").click(function () {
+            $('#loading').show();
+            var progressEle = $("#progress");
+            progressEle.css("background", "blue");
+
+            var data = document.getElementById("file").files[0];
+
+            var formData = new FormData();
+
+            formData.append("file", data);
+            $(this).hide();
+
+            $.ajax({
+                url: "import",
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress",
+                        function(evt) {
+                            if (evt.lengthComputable) {
+                                var progress = Math.round((evt.loaded / evt.total) * 100);
+                                progressEle.width(progress + "%");
+                            }
+                        },
+                        false);
+                    return xhr;
+                },
+                success: function (data) {
+                    if (data.result == 1) {
+                        progressEle.css("background", "green");
+                        $(this).show();
+                        $('#loading').hide();
+                        $(this).removeAttr('disabled');
+                    }
+                }
+            });
+        });
+    </script>
+}
