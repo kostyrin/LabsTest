@@ -27,12 +27,12 @@ namespace NewLabsTest.Controllers
         }
 
         [HttpPost("import")]
-        public async Task<JsonResult> UploadFiles(IFormFile file)
+        public async Task<JsonResult> UploadFiles(IFormFile file, int batchSize)
         {
             bool result;
             using (StreamReader sr = new StreamReader(file.OpenReadStream()))
             {
-                result = await _importService.ImportData(sr);
+                result = await _importService.ImportDataAsync(sr, batchSize);
             }
             
             return Json(new { result, message = "the files are uploaded" });

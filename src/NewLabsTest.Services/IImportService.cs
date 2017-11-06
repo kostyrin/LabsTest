@@ -8,6 +8,6 @@ namespace NewLabsTest.Services
 {
     public interface IImportService
     {
-        Task<bool> ImportData(StreamReader content);
+        Task<bool> ImportDataAsync(StreamReader content, int batchSize);
     }
 }

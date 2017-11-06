@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NewLabsTest.Domain.Models;
+using NewLabsTest.Services.Extensions;
 
 namespace NewLabsTest.Services
 {
@@ -17,12 +19,21 @@ namespace NewLabsTest.Services
             _userService = userService;
         }
 
-        public Task<bool> ImportData(StreamReader sr)
+        public Task<bool> ImportDataAsync(StreamReader sr, int batchSize)
         {
-            var users = GetUsers(sr);
-            return _userService.CreateUsers(users);
+            return Task.Run(async () =>
+            {
+                var users = GetUsers(sr);
+                //batches are better for performance CPU and SQL then whole list  
+                foreach (IEnumerable<User> batch in users.Batch(batchSize))
+                {
+                    await _userService.CreateUsers(batch);
+                }
+                return true;
+            });
+            
         }
-
+        
         private IEnumerable<User> GetUsers(StreamReader sr)
         {
             string line;

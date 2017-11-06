@@ -1,12 +1,17 @@
 ﻿<div class="row">
-    <div class="col-md-12">
+    <div>
         <h2>Import data from CSV</h2>
+        <p>batch size:</p>
+        @Html.TextBox("batchSize", 10000, null, new { type = "number" })
+        <br/><br />
+        @*<input name="batchSize" id="batchSize" value="10000" type="number"/>*@
         <div style="position: relative; width: 296px; background: #f0f0f0">
             <div id="progress" style="background: blue; height: 20px; width: 0"></div>
         </div>
-
         <input type="file" id="file"/>
+        <br />
         <button>upload</button>
+        <br />
         <div id="loading">
             <p><img src="/images/load.gif" /> Please Wait...</p>
         </div>
@@ -23,10 +28,12 @@
             progressEle.css("background", "blue");
 
             var data = document.getElementById("file").files[0];
+            var batchSize = $("#batchSize").val();
 
             var formData = new FormData();
-
             formData.append("file", data);
+            formData.append("batchSize", batchSize);
+
             $(this).hide();
 
             $.ajax({
