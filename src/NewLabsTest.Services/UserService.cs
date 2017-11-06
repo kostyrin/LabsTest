@@ -51,5 +51,24 @@ namespace NewLabsTest.Services
         {
             return _context.Users.LongCountAsync();
         }
+
+        public Task<User> GetUserById(int id)
+        {
+            return _context.Users.SingleAsync(u => u.Id == id);
+        }
+
+        public async Task<bool> UpdateUser(User user)
+        {
+            _context.Update(user);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteUser(User user)
+        {
+            _context.Users.Remove(user);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }

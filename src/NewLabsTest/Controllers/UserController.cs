@@ -56,5 +56,29 @@ namespace NewLabsTest.Controllers
             //Returning Json Data  
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var user = await _userService.GetUserById(id);
+            var model = _mapper.Map<User, UserViewModel>(user);
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewModel model)
+        {
+            var user = _mapper.Map<UserViewModel, User>(model);
+            var result = await _userService.UpdateUser(user);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _userService.GetUserById(id);
+            var result = await _userService.DeleteUser(user);
+            return RedirectToAction("Index");
+        }
     }
 }

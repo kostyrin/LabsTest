@@ -11,7 +11,9 @@ namespace NewLabsTest.ViewModels
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        [DisplayFormat(DataFormatString = @"{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
         public string Phone { get; set; }
     }

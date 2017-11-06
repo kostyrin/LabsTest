@@ -14,5 +14,9 @@ namespace NewLabsTest.Services
 
         Task<IEnumerable<User>> GetList(string sortColumn, string sortColumnDirection, int page, int pageSize);
         Task<long> LongCount();
+
+        Task<User> GetUserById(int id);
+        Task<bool> UpdateUser(User user);
+        Task<bool> DeleteUser(User user);
     }
 }

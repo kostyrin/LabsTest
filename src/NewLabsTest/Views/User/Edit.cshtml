@@ -1,0 +1,58 @@
+﻿@model NewLabsTest.ViewModels.UserViewModel
+<link href="~/lib/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" />
+<link href="~/lib/datetimepicker/build/jquery.datetimepicker.min.css" rel="stylesheet" />
+
+<h4>UserViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input name="Id" id="Id" hidden="hidden" Value="@Model.Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthday" class="control-label"></label>
+                <input asp-for="Birthday" class="form-control" type="datetime" />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/datetimepicker/jquery.datetimepicker.js"></script>
+    <script src="~/lib/datetimepicker/build/jquery.datetimepicker.full.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#Birthday").datetimepicker({
+                timepicker: false,
+                format: 'd.m.Y'
+            });  
+            jQuery.datetimepicker.setLocale('ru');
+
+        })
+    </script>
+}
+
