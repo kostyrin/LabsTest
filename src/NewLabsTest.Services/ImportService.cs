@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using NewLabsTest.Domain.Models;
 using NewLabsTest.Services.Extensions;
@@ -50,8 +48,8 @@ namespace NewLabsTest.Services
             {
                 Name = fields[0],
                 Birthday = DateTime.ParseExact(fields[1], "dd.MM.yy", CultureInfo.InvariantCulture),
-                Email = fields[2],
-                Phone = fields[3]
+                Email = fields[2].ToLower(),
+                Phone = fields[3] 
             };
         }
     }
