@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="libphonenumbers-dotnet" Version="1.1.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.7.11" />
   </ItemGroup>
 

@@ -5,12 +5,14 @@ using System.IO;
 using System.Threading.Tasks;
 using NewLabsTest.Domain.Models;
 using NewLabsTest.Services.Extensions;
+using PhoneNumbers;
 
 namespace NewLabsTest.Services
 {
     public class ImportService : IImportService
     {
         private readonly IUserService _userService;
+        private readonly PhoneNumberUtil _phoneUtil = PhoneNumberUtil.GetInstance();
 
         public ImportService(IUserService userService)
         {
@@ -49,7 +51,7 @@ namespace NewLabsTest.Services
                 Name = fields[0],
                 Birthday = DateTime.ParseExact(fields[1], "dd.MM.yy", CultureInfo.InvariantCulture),
                 Email = fields[2].ToLower(),
-                Phone = fields[3] 
+                Phone = _phoneUtil.Format(_phoneUtil.Parse(fields[3], "RU"), PhoneNumberFormat.INTERNATIONAL)
             };
         }
     }
